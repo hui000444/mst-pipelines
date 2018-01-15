@@ -8,6 +8,12 @@
 * nexus
 
 ## Steps
+### Mount volume if necessary(Skip this step, for they already done)
+```
+vgextend u14-vg /dev/sdb  // Add disk sdb to volume group
+lvextend -L+32G /dev/u14-vg/root // extend the logic volume size 
+resize2fs /dev/mapper/u14--vg-root // reformat logic volume
+```
 ### Setup nexus
 * start nexus
 ```
@@ -34,8 +40,8 @@ Auto register agent
 
 ```
 docker build -t gocd/gocd-agent-alpine-3.5:v17.12.0-docker dockerfiles/gocd-agent-with-docker/
-chmod 666 /var/run/docker.sock
-docker run -d -e WORKDIR=$(pwd)/goagent -e GO_SERVER_URL=https://172.17.0.1:8154/go -v $(pwd)/goagent:/godata -v $HOME:/home/go -v /var/run/docker.sock:/var/run/docker.sock:rw -v $HOME/.docker:/home/go/.docker:rw -e AGENT_AUTO_REGISTER_KEY=067c1411-e87c-485d-a70b-2abde3c599f2 -e AGENT_AUTO_REGISTER_RESOURCES=docker -e AGENT_AUTO_REGISTER_HOSTNAME=superman gocd/gocd-agent-alpine-3.5:v17.12.0-docker
+docker run -d --name=superman -e WORKDIR=$(pwd)/goagent -e GO_SERVER_URL=https://172.17.0.1:8154/go -v $(pwd)/goagent:/godata -v $HOME:/home/go -v /var/run/docker.sock:/var/run/docker.sock:rw -v $HOME/.docker:/home/go/.docker:rw -e AGENT_AUTO_REGISTER_KEY=b139db14-319b-46fa-a6cf-efd50b867ec5 -e AGENT_AUTO_REGISTER_RESOURCES=docker -e AGENT_AUTO_REGISTER_HOSTNAME=superman gocd/gocd-agent-alpine-3.5:v17.12.0-docker
+docker exec superman chmod 666 /var/run/docker.sock
 ```
 
 ### Create automation scripts for user service
