@@ -17,7 +17,7 @@ resize2fs /dev/mapper/u14--vg-root // reformat logic volume
 ### Setup nexus
 * start nexus
 ```
-docker run -d -v $(pwd)/nexusdata/nexusdata -p 5000:5000 -p 8081:8081 sonatype/nexus3
+docker run -d -v $(pwd)/nexusdata:/nexus-data -p 5000:5000 -p 8081:8081 sonatype/nexus3
 ```
 * initialize nexus
 
