@@ -1,0 +1,8 @@
+version: '2'
+services:
+  nginx:
+    stdin_open: true
+    tty: true
+    expose:
+     - "80"
+    image: nginx:1.12-alpine
