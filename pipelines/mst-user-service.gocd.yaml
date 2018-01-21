@@ -1,46 +1,25 @@
 pipelines:
   mst-user-service:
-    group: tw-ms-train
+    group: mst
     label_template: "${COUNT}"
     locking: off
     # setting materials
     materials:
       app:
-        git: git@github.com:sjjianshen/mst-user-service.git
+        git: git@github.com:tw-ms-training/mst-user-service.git
         branch: master
     # setting stages
     stages:
-      - test-basic:
+      - test:
           clean_workspace: true
           jobs:
-            test-unit:
+            test:
               tasks:
                 - exec:
                     command: bash
                     arguments:
                       - "-e"
                       - "./scripts/test.sh"
-                    run_if: passed
-      - test-integration:
-          clean_workspace: yes
-          jobs:
-            test:
-              tasks:
-                - exec:
-                    command: ls
-                    arguments:
-                      - "-al"
-                    run_if: passed
-      - test-coverage:
-          fetch_materials: yes
-          clean_workspace: yes
-          jobs:
-            test-coverage:
-              tasks:
-                - exec:
-                    command: ls
-                    arguments:
-                      - "-al"
                     run_if: passed
       - build:
           clean_workspace: yes
@@ -52,15 +31,4 @@ pipelines:
                     arguments:
                       - "-e"
                       - "./scripts/build.sh"
-                    run_if: passed
-      - deployment-qa:
-          clean_workspace: yes
-          jobs:
-            deploy:
-              tasks:
-                - exec:
-                    command: bash
-                    arguments:
-                      - "-e"
-                      - "./scripts/deploy.sh"
                     run_if: passed

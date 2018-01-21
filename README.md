@@ -46,6 +46,7 @@ docker exec superman chmod 666 /var/run/docker.sock
 
 ### Create automation scripts for user service
 scripts/test.sh
+
 ```
 #! /usr/bin/env bash
 set -x
